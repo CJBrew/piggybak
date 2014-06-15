@@ -6,6 +6,10 @@ class AddPriceToLineItem < ActiveRecord::Migration
       t.timestamps
     end
 
+    Piggybak::LineItem.class_eval do
+      self.table_name = 'line_items'
+    end
+
     Piggybak::LineItem.all.each do |line_item|
       line_item.update_attribute(:price, line_item.total/line_item.quantity)
     end
